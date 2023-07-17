@@ -1,0 +1,49 @@
+/*
+	Color fondo: #632432;
+	Color header: 246355;
+	Color borde: 0F362D;
+	Color iluminado: 369681;
+*/
+body {
+    background-color: #632432;
+    font-family: Arial;
+}
+
+.main-container {
+    margin: 150px auto;
+    width: 800px;
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    list-style-type: none;
+}
+
+li {
+    padding: 20px;
+    text-align: center;
+}
+
+.titulos {
+    background-color: #246355;
+    border-bottom: solid 5px #0F362D;
+    color: white;
+}
+
+.tabla {
+    background-color: white;
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.idTitle {
+    color: #246355;
+    font-weight: bold;
+}
