@@ -11,12 +11,16 @@ export class ProductManager {
         this.products = await this.getProducts();
         const validarCode = this.products.some((e) => e.code === productoBody.code)
         if (validarCode) {
+            return false
+            /* 
             let error = new Error(`Ya existe el producto con el CODE: ${productoBody.code}`);
             error.statusCode = 400
             throw error;
+            */
+        } else {
+            this.products.push({ id: this.products.length ? this.products[this.products.length - 1].id + 1 : 1, ...productoBody })
+            await utils.write(this.path, this.products);
         }
-        this.products.push({ id: this.products.length ? this.products[this.products.length - 1].id + 1 : 1, ...productoBody })
-        await utils.write(this.path, this.products);
     };
 
 
@@ -47,12 +51,16 @@ export class ProductManager {
         this.products = await this.getProducts();
         const productsFilter = this.products.find((product) => product.id == id)
         if (productsFilter == undefined) {
+            return false
+            /*
             let error = new Error(`No existe el producto con el ID: ${id}`)
             error.statusCode = 400
             throw error;
+            */
+        }else {
+            this.products = this.products.filter(e => e.id !== id)
+            await utils.write(this.path, this.products)
         }
-        this.products = this.products.filter(e => e.id !== id)
-        await utils.write(this.path, this.products)
     }
 
     async updateProduct(id, cambio) {

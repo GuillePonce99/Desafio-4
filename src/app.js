@@ -5,14 +5,15 @@ import handlebars from "express-handlebars"
 import { __dirname } from "./utils.js"
 import productRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
-import { ProductManager } from "./manager/ProductManager.js"
+import socket from "./sockets.js"
 
-const miProducto = new ProductManager("productos.json")
 const app = express()
 const port = 8080
 const httpServer = app.listen(port,()=>{
     console.log(`Servidor corriendo en puerto ${port}`);
 })
+
+//config
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,12 +30,10 @@ app.set("views", __dirname +"/views" )
 
 app.set("view engine", "handlebars")
 
-//---
-const socketServer = new Server(httpServer)
+//Socket io
+const io = new Server(httpServer)
 
-socketServer.on("connection", async (socket) =>{
-    console.log("nueva conexion");
-    const productos = await miProducto.getProducts()
-    socket.emit("lista_productos",productos)
-})
+socket(io)
+
+
 
