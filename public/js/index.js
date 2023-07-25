@@ -13,6 +13,8 @@ const idEliminar = document.getElementById("id_eliminar")
 const btnEliminar = document.getElementById("btn_eliminar");
 const actionDelete = document.getElementById("action_delete");
 
+//render lista productos
+
 socket.on("lista_productos", (data) => {
   let form = document.getElementById("form-real-time");
   let element = "";
@@ -32,6 +34,8 @@ socket.on("lista_productos", (data) => {
   form.innerHTML = element;
 });
 
+//agregar producto
+
 boton.addEventListener("click", () => {
   socket.emit("agregar_producto", {
     title: productoTitle.value,
@@ -45,7 +49,6 @@ boton.addEventListener("click", () => {
 })
 
 socket.on("agregar_producto", (data) => {
-  console.log(data);
   if (!data.isComplete) {
     actionAdd.innerHTML = `<p>Complete todos los datos</p>`
 
@@ -56,6 +59,8 @@ socket.on("agregar_producto", (data) => {
     actionAdd.innerHTML = `<p>Producto agregado!!</p>`
   }
 })
+
+//eliminar producto
 
 btnEliminar.addEventListener("click", () => {
   const id = Number(idEliminar.value)
@@ -71,7 +76,5 @@ socket.on("eliminar_producto", (data) => {
     actionDelete.innerHTML = `<p>Producto eliminado!!</p>`
   }
 })
-
-
 
 

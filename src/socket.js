@@ -1,5 +1,6 @@
 import { ProductManager } from "./manager/ProductManager.js"
 const miProducto = new ProductManager("productos.json")
+
 export default (io) => {
     io.on("connection", async (socket) => {
         console.log("nueva conexion");
@@ -42,18 +43,19 @@ export default (io) => {
         socket.on("eliminar_producto", async (data) => {
             let notFound = false
             try {
-                await miProducto.deleteProduct(data.id).then((result)=>{
-                    if (result===false) {
+                await miProducto.deleteProduct(data.id).then((result) => {
+                    if (result === false) {
                         notFound = true
-                        socket.emit("eliminar_producto",{notFound})
+                        socket.emit("eliminar_producto", { notFound })
                     } else {
-                        socket.emit("eliminar_producto",{notFound})
+                        socket.emit("eliminar_producto", { notFound })
                     }
                 })
             }
-            catch(e){
+            catch (e) {
                 console.log(e);
             }
         })
+
     })
 }
